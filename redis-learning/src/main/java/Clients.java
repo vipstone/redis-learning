@@ -1,4 +1,5 @@
 import io.lettuce.core.RedisClient;
+import io.lettuce.core.SetArgs;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisStringCommands;
 import utils.Config;
@@ -7,14 +8,26 @@ import utils.Config;
  * 连接客户端
  */
 public class Clients {
-    // Redis 基础连接
-    private static RedisClient _RedisClient = RedisClient.create(Config.RedisConfig);
 
     public static void main(String[] args) {
-        StatefulRedisConnection<String, String> connection = _RedisClient.connect();
-        RedisStringCommands<String, String> sync = connection.sync();
-        // 设置 K,V=language,Java
-        sync.set("language", "Java");
-        System.out.println(sync.get("language"));
+        lettuceUse();
     }
+
+    /**
+     * Lettuce 使用演示
+     */
+    private static void lettuceUse() {
+        // 创建 Redis 连接
+        RedisClient redisClient = RedisClient.create(Config.RedisConfig);
+        // 获取 Redis 连接
+        StatefulRedisConnection<String, String> connection = redisClient.connect();
+        // 获取同步执行命令对象 RedisStringCommands
+        RedisStringCommands<String, String> sync = connection.sync();
+        // 设置缓存（有效期 10s）
+        sync.set("language", "Java", new SetArgs().ex(10));
+        // 获取缓存
+        String getStr = sync.get("language");
+        System.out.println(getStr);
+    }
+
 }
