@@ -1,4 +1,4 @@
-package main.java;
+package datatype;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ListPosition;
