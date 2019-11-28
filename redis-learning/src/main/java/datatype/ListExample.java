@@ -10,9 +10,10 @@ import java.util.List;
  */
 public class ListExample {
     public static void main(String[] args) {
-        final String REDISKEY = "list";
         Jedis jedis = new Jedis("xxx.xxx.xxx.xxx", 6379);
         jedis.auth("xxx");
+        // 把 Key 值定义为变量
+        final String REDISKEY = "list";
         // 在头部插入一个或多个元素
         Long lpushResult = jedis.lpush(REDISKEY, "Java", "Sql");
         System.out.println(lpushResult); // 输出：2
