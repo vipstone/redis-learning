@@ -1,9 +1,14 @@
 package datatype;
 
+import com.google.gson.Gson;
 import redis.clients.jedis.Jedis;
 
+import java.io.Serializable;
 import java.util.List;
 
+/**
+ * 字符串示例
+ */
 public class StringExample {
     public static void main(String[] args) {
         Jedis jedis = new Jedis("xxx.xxx.xxx.xxx", 6379);
@@ -35,5 +40,56 @@ public class StringExample {
         // 查询键值的过期时间
         Long ttl = jedis.ttl("db");
         System.out.println(ttl); // 输出：1000
+        // JSON 示例
+        Gson gson = new Gson();
+        // 初始化用户数据
+        User user = new User();
+        user.setId(1);
+        user.setName("Redis");
+        user.setAge(10);
+        String jsonUser = gson.toJson(user);
+        // 打印用户信息(json)
+        System.out.println(jsonUser); // 输出：{"id":1,"name":"Redis","age":10}
+        // 把字符串存入 Redis
+        jedis.set("user_1", jsonUser);
+        // 从 Redis 中获取用户信息
+        String getUserData = jedis.get("user_1");
+        User userData = gson.fromJson(getUserData, User.class);
+        System.out.println(userData.getId() + ":" + userData.getName()); // 输出结果：1:Redis
     }
+
+    /**
+     * 用户对象类
+     */
+    static class User implements Serializable {
+        private int id; // 编号
+        private String name; // 姓名
+        private int age; // 年龄
+        // 其他信息...
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+    }
+
 }
