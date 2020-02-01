@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class ListExample {
     public static void main(String[] args) {
-        Jedis jedis = new Jedis("xxx.xxx.xxx.xxx", 6379);
-        jedis.auth("xxx");
+        Jedis jedis = new Jedis("127.0.0.1", 6379);
+//        jedis.auth("pwd654321"); // redis 服务器密码
         // 把 Key 值定义为变量
         final String REDISKEY = "list";
         // 在头部插入一个或多个元素

@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class StringExample {
     public static void main(String[] args) {
-        Jedis jedis = new Jedis("xxx.xxx.xxx.xxx", 6379);
-        jedis.auth("xxx");
+        Jedis jedis = new Jedis("127.0.0.1", 6379);
+//        jedis.auth("pwd654321"); // redis 服务器密码
         // 添加一个元素
         jedis.set("mystr", "redis");
         // 获取元素

@@ -7,9 +7,9 @@ import redis.clients.jedis.Transaction;
 public class TransactionExample {
     public static void main(String[] args) {
         // 创建 Redis 连接
-        Jedis jedis = new Jedis("xxx.xxx.xxx.xxx", 6379);
+        Jedis jedis = new Jedis("127.0.0.1", 6379);
         // 设置 Redis 密码
-        jedis.auth("xxx");
+//        jedis.auth("xxx");
         // 设置键值
         jedis.set("k", "v");
         // 开启监视 watch

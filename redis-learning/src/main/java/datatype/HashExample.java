@@ -5,12 +5,12 @@ import redis.clients.jedis.Jedis;
 import java.util.Map;
 
 /**
- * 哈希表示例
+ * 哈希类型示例
  */
 public class HashExample {
     public static void main(String[] args) throws InterruptedException {
-        Jedis jedis = new Jedis("xxx.xxx.xxx.xxx", 6379);
-        jedis.auth("xxx");
+        Jedis jedis = new Jedis("127.0.0.1", 6379);
+//        jedis.auth("pwd654321"); // redis 服务器密码
         // 把 Key 值定义为变量
         final String REDISKEY = "myhash";
         // 插入单个元素

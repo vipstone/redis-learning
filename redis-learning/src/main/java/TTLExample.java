@@ -6,9 +6,9 @@ import redis.clients.jedis.Jedis;
 public class TTLExample {
     public static void main(String[] args) throws InterruptedException {
         // 创建 Redis 连接
-        Jedis jedis = new Jedis("xxx.xxx.xxx.xxx", 6379);
-        // 设置 Redis 密码(如果没有密码，此行可省略)
-        jedis.auth("xxx");
+        Jedis jedis = new Jedis("127.0.0.1", 6379);
+        // 设置 Redis 密码
+//        jedis.auth("xxx");
         // 存储键值对（默认情况下永不过期）
         jedis.set("k", "v");
         // 查询 TTL（过期时间）

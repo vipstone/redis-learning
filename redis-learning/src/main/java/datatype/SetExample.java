@@ -9,8 +9,8 @@ import java.util.Set;
  */
 public class SetExample {
     public static void main(String[] args) {
-        Jedis jedis = new Jedis("xxx.xxx.xxx.xxx", 6379);
-        jedis.auth("xxx");
+        Jedis jedis = new Jedis("127.0.0.1", 6379);
+//        jedis.auth("pwd654321"); // redis 服务器密码
         // 创建集合并添加元素
         jedis.sadd("set1", "java", "golang");
         // 查询集合中的所有元素
