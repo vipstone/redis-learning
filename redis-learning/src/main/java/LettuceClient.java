@@ -5,9 +5,9 @@ import io.lettuce.core.api.sync.RedisStringCommands;
 import utils.Config;
 
 /**
- * 连接客户端
+ * Lettuce 客户端演示
  */
-public class Clients {
+public class LettuceClient {
 
     public static void main(String[] args) {
         lettuceUse();
@@ -18,7 +18,7 @@ public class Clients {
      */
     private static void lettuceUse() {
         // 创建 Redis 连接
-        RedisClient redisClient = RedisClient.create(Config.RedisConfig);
+        RedisClient redisClient = RedisClient.create(Config.REDISCONFIG_PROTOCOL);
         // 获取 Redis 连接
         StatefulRedisConnection<String, String> connection = redisClient.connect();
         // 获取同步执行命令对象 RedisStringCommands
