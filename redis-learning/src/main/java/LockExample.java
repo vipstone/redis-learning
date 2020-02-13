@@ -38,7 +38,7 @@ public class LockExample {
      */
     public static boolean lock(Jedis jedis, String key, String flagId, Integer secondsTime) {
         SetParams params = new SetParams();
-        params.ex(secondsTime);
+        params.ex(secondsTime); // 设置过期时间
         params.nx();
         String res = jedis.set(key, flagId, params);
         if (StringUtils.isNotBlank(res) && res.equals("OK"))
