@@ -22,11 +22,11 @@ public class DelayQueueExample {
         jedis.zadd(_KEY, Instant.now().plusSeconds(7).getEpochSecond(), "order_4");
         jedis.zadd(_KEY, Instant.now().plusSeconds(10).getEpochSecond(), "order_5");
         // 开启延迟队列
-        doDelayQueue(jedis);
+        doDelayQueue2(jedis);
     }
 
     /**
-     * 延迟队列消费
+     * 延迟队列消费（方式1）
      * @param jedis Redis 客户端
      */
     public static void doDelayQueue(Jedis jedis) throws InterruptedException {
@@ -34,7 +34,7 @@ public class DelayQueueExample {
             // 当前时间
             Instant nowInstant = Instant.now();
             long lastSecond = nowInstant.plusSeconds(-1).getEpochSecond(); // 上一秒时间
-            long nowSecond = Instant.now().getEpochSecond();
+            long nowSecond = nowInstant.getEpochSecond();
             // 查询当前时间的所有任务
             Set<String> data = jedis.zrangeByScore(_KEY, lastSecond, nowSecond);
             for (String item : data) {
@@ -44,6 +44,31 @@ public class DelayQueueExample {
             // 删除已经执行的任务
             jedis.zremrangeByScore(_KEY, lastSecond, nowSecond);
             Thread.sleep(1000); // 每秒轮询一次
+        }
+    }
+
+    /**
+     * 延迟队列消费（方式2）
+     * @param jedis Redis 客户端
+     */
+    public static void doDelayQueue2(Jedis jedis) throws InterruptedException {
+        while (true) {
+            // 当前时间
+            long nowSecond = Instant.now().getEpochSecond();
+            // 每次查询一条消息，判断此消息的执行时间
+            Set<String> data = jedis.zrange(_KEY, 0, 0);
+            if (data.size() == 1) {
+                String firstValue = data.iterator().next();
+                // 消息执行时间
+                Double score = jedis.zscore(_KEY, firstValue);
+                if (nowSecond >= score) {
+                    // 消费消息（业务功能处理）
+                    System.out.println("消费消息：" + firstValue);
+                    // 删除已经执行的任务
+                    jedis.zrem(_KEY, firstValue);
+                }
+            }
+            Thread.sleep(100); // 执行间隔，可根据实际任务量设置此值
         }
     }
 }
