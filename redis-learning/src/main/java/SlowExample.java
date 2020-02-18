@@ -2,7 +2,6 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.util.Slowlog;
 import utils.JedisUtils;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,7 +19,7 @@ public class SlowExample {
         List<Slowlog> list = jedis.slowlogGet();
         // 循环打印
         for (Slowlog item : list) {
-            System.out.println("慢查询命令："+ Arrays.asList(item.getArgs())+
+            System.out.println("慢查询命令："+ item.getArgs()+
                     " 执行了："+item.getExecutionTime()+" 微秒");
         }
         // 清空慢查询日志
