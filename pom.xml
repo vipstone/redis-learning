@@ -31,6 +31,12 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.9</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.redislabs/jredisearch -->
+        <dependency>
+            <groupId>com.redislabs</groupId>
+            <artifactId>jredisearch</artifactId>
+            <version>1.3.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
